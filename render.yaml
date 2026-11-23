@@ -1,0 +1,16 @@
+# Render lee este archivo en: New > Blueprint.
+services:
+  - type: web
+    name: houdiniapp-api
+    runtime: python
+    plan: free
+    region: ohio # la misma zona que Supabase (us-east-2)
+    rootDir: servidor
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    healthCheckPath: /api/estado
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: DATABASE_URL
+        sync: false # Render te la pide: nunca se guarda en GitHub

@@ -1,0 +1,12 @@
+{
+  "name": "HoudiniApp",
+  "short_name": "Houdini",
+  "description": "Tu escape social inteligente a un solo toque.",
+  "lang": "es",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1220",
+  "theme_color": "#0d1220",
+  "icons": [{ "src": "icono.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
