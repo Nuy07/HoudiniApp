@@ -11,8 +11,9 @@ MAX_CLAVES = 5000
 class LimitadorIntentos:
     """Máximo de intentos por clave en cada ventana de tiempo."""
 
-    def __init__(self, maximo: int, ventana: float = 600, reloj: Reloj = time.time):
-        self._maximo, self._ventana, self._reloj = maximo, ventana, reloj
+    def __init__(self, maximo: int, ventana: float = 600, reloj: Reloj = time.time,
+                 aviso: str = "Demasiados intentos. Espera unos minutos."):
+        self._maximo, self._ventana, self._reloj, self._aviso = maximo, ventana, reloj, aviso
         self._intentos: dict[str, tuple[int, float]] = {}
 
     def contar(self, clave: str) -> None:
@@ -24,7 +25,7 @@ class LimitadorIntentos:
             n, hasta = 0, ahora + self._ventana
         self._intentos[clave] = (n + 1, hasta)
         if n + 1 > self._maximo:
-            raise DemasiadosIntentos("Demasiados intentos. Espera unos minutos.")
+            raise DemasiadosIntentos(self._aviso)
 
 
 class Pausa:

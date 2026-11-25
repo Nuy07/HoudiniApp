@@ -5,10 +5,10 @@ import unittest
 from app.configuracion import RAIZ
 
 PROHIBIDO = {
-    "dominio": r"fastapi|starlette|psycopg|pydantic|app\.(servicios|infraestructura|api)",
-    "servicios": r"fastapi|starlette|psycopg|pydantic|app\.(infraestructura|api)",
+    "dominio": r"anthropic|fastapi|starlette|psycopg|pydantic|app\.(servicios|infraestructura|api)",
+    "servicios": r"anthropic|fastapi|starlette|psycopg|pydantic|app\.(infraestructura|api)",
     "infraestructura": r"app\.(servicios|api)",
-    "api": r"psycopg",
+    "api": r"psycopg|anthropic",
 }
 
 

@@ -25,7 +25,7 @@ Las dos partes usan las mismas capas. Las de afuera conocen a las de adentro, nu
       bd/                   esquema y datos de Supabase
       app/
         dominio/            entidades, errores, contratos (puertos)
-        servicios/          cuentas, sesiones, respaldos, tienda, cómplices, alertas
+        servicios/          cuentas, sesiones, respaldos, tienda, cómplices, alertas, asistente
         infraestructura/    conexión, huellas, WebSocket y repositorios/
         api/                rutas/, esquemas, errores, dependencias
       pruebas/
@@ -35,8 +35,8 @@ Las dos partes usan las mismas capas. Las de afuera conocen a las de adentro, nu
     movil/
       App.tsx               arranque
       src/
-        dominio/            modelos, contratos (puertos) y reglas puras
-        servicios/          escapes/, gatillos/, llamada/, nube/
+        dominio/            modelos, contratos (puertos), reglas puras e ia/
+        servicios/          asistente/ (IA), escapes/, gatillos/, llamada/, nube/
         infraestructura/    local/ (SQLite), nube/ (API), dispositivo/ (sensores, audio)
         estado/             navegación, avisos y formulario abierto
         estilos/            tema (colores) y estilos de cada vista
@@ -49,6 +49,17 @@ Las dos partes usan las mismas capas. Las de afuera conocen a las de adentro, nu
 - **L, sustitución:** `VocesSqlite`, `PerfilesSqlite` y demás se usan como cualquier `Coleccion`. En las pruebas, los repositorios en memoria reemplazan a los de PostgreSQL.
 - **I, contratos pequeños:** `Vibrador`, `Sonidos` o `RegistroEscapes` tienen solo lo necesario.
 - **D, depender de contratos:** los servicios reciben contratos en su constructor. Solo el contenedor conoce Expo, SQLite o PostgreSQL.
+
+## Inteligencia artificial: Houdini IA
+
+La persona cuenta su situación y la IA arma el escape: quién llama, qué dice, qué mensajes llegan y un consejo.
+
+1. **IA del teléfono.** Clasificador de texto Naive Bayes multinomial, con suavizado, escrito desde cero en `movil/src/dominio/ia/`. Se entrena al abrir con 112 frases y un léxico de 8 situaciones, muestra su certeza y aprende de los planes que se usan. Funciona gratis, sin internet y sin enviar nada. `npm run ia` la evalúa: 20 de 24 (83%) en frases nuevas, escritas aparte. La validación cruzada da 88%, pero es optimista porque el léxico comparte palabras con las frases.
+2. **IA generativa.** Con sesión iniciada, la API pide el plan a Claude (`servidor/app/infraestructura/ia_claude.py`) con salida JSON obligatoria y la valida. La clave vive solo en Render. Hay límite por persona y por día.
+
+Si la nube no responde o no está activada, contesta la IA del teléfono. Ante señales de peligro no se espera a internet y se ofrece marcar al 911.
+
+Para activar la nube agrega `ANTHROPIC_API_KEY` en Render > Environment. `IA_MODELO` es opcional.
 
 ## API en tu computadora
 
@@ -73,6 +84,7 @@ La app usa la API en https://houdiniapp-api.onrender.com. Se puede cambiar en Co
     python -m unittest          (servicios y capas, sin base de datos)
     cd ../movil
     npm run revisar             (tipos y capas)
+    npm run ia                  (evalúa la IA del teléfono)
 
 `python -m pruebas.integracion` prueba la API completa. Necesita `pip install -r requirements-dev.txt` y `DATABASE_URL_PRUEBA` con una base PostgreSQL vacía.
 

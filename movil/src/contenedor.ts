@@ -24,6 +24,7 @@ import { ClienteApi } from './infraestructura/nube/ClienteApi';
 import { ComplicesApi } from './infraestructura/nube/ComplicesApi';
 import { CuentasApi } from './infraestructura/nube/CuentasApi';
 import { DireccionServidor } from './infraestructura/nube/DireccionServidor';
+import { PlanesApi } from './infraestructura/nube/PlanesApi';
 import { RespaldoApi } from './infraestructura/nube/RespaldoApi';
 import { SesionGuardada } from './infraestructura/nube/SesionGuardada';
 import { TiendaApi } from './infraestructura/nube/TiendaApi';
@@ -35,6 +36,8 @@ import { Emisor } from './dominio/Emisor';
 import { Formularios } from './estado/Formularios';
 import { Navegacion } from './estado/Navegacion';
 import { DatosEjemplo } from './servicios/DatosEjemplo';
+import { AsistenteLocal } from './servicios/asistente/AsistenteLocal';
+import { ServicioAsistente } from './servicios/asistente/ServicioAsistente';
 import { BombaNotificaciones } from './servicios/escapes/BombaNotificaciones';
 import { Lanzador } from './servicios/escapes/Lanzador';
 import { LlamadaFalsa } from './servicios/escapes/LlamadaFalsa';
@@ -63,6 +66,7 @@ export interface Contenedor {
   notificaciones: Notificaciones; ubicacion: Ubicacion;
   servidor: DireccionServidor; api: { probar(): Promise<void> }; canal: { readonly enLinea: boolean };
   cuenta: ServicioCuenta; respaldo: ServicioRespaldo; tienda: ServicioTienda; complices: ComplicesRemotos; alertas: ServicioAlertas;
+  asistente: ServicioAsistente;
   derivador: DerivadorWebView;
   iniciar(): Promise<void>;
 }
@@ -115,6 +119,10 @@ export function crearContenedor(): Contenedor {
   const respaldo = new ServicioRespaldo(new RespaldoApi(api), new CopiaSqlite(base), new CifradorAesGcm(), sesion, () => gps.reglasReemplazadas());
   const tienda = new ServicioTienda(new TiendaApi(api), voces, perfiles);
 
+  // Inteligencia artificial
+  const asistente = new ServicioAsistente(
+    new AsistenteLocal(preferencias), new PlanesApi(api), sesion, preferencias, lanzador, voces, perfiles, bombas, cambios);
+
   async function iniciar() {
     base.abrir();
     sonidos.preparar();
@@ -136,6 +144,6 @@ export function crearContenedor(): Contenedor {
     estiloLlamada: new EstiloLlamada(preferencias, Platform.OS === 'ios' ? 'ios' : 'android'),
     timbre: new Timbre(sonidos, vibrador), narrador: new Narrador(new HablanteExpo()), oido: new DetectorOido(acelerometro, preferencias),
     agitar, gps, temporizador, discreto, notificaciones, ubicacion, servidor, api, canal,
-    cuenta, respaldo, tienda, complices, alertas, derivador, iniciar,
+    cuenta, respaldo, tienda, complices, alertas, asistente, derivador, iniciar,
   };
 }

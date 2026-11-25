@@ -1,6 +1,6 @@
 import type { DatosLlamada, Gatillo } from '../../dominio/modelos';
 import type { Avisador, ColeccionPerfiles, Notificable, Preferencias, RegistroEscapes } from '../../dominio/puertos';
-import type { Escape } from './Escape';
+import type { Escape, QueLanzar } from './Escape';
 
 export class LlamadaFalsa implements Escape {
   readonly tipo = 'llamada';
@@ -21,8 +21,8 @@ export class LlamadaFalsa implements Escape {
 
   perfil(id = Number(this.preferencias.leer('perfil', '0'))) { return this.perfiles.paraLlamar(id); }
 
-  iniciar(gatillo: Gatillo, id?: number) {
-    const p = this.perfil(id);
+  iniciar(gatillo: Gatillo, que?: QueLanzar) {
+    const p = typeof que === 'object' ? que.llamada : this.perfil(que);
     if (!p) return this.avisos.mostrar('Crea un perfil primero.');
     this.actual = {
       id: ++this.serie, nombre: p.nombre, etiqueta: p.etiqueta, rate: p.voz?.rate ?? 1, pitch: p.voz?.pitch ?? 1,

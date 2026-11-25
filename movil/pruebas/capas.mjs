@@ -13,8 +13,8 @@ const PERMITE = {
   estilos: ['estilos', 'externo'],
   vistas: ['dominio', 'estado', 'estilos', 'vistas', 'contenedor', 'externo'],
 };
-// El WebView necesita conocer los pedidos de su derivador.
-const EXCEPCIONES = ['vistas/capas/Derivador.tsx -> infraestructura'];
+// Solo usan un tipo: los pedidos del derivador y la respuesta de la IA.
+const EXCEPCIONES = ['vistas/capas/Derivador.tsx -> infraestructura', 'vistas/componentes/asistente/TarjetaPlan.tsx -> servicios'];
 
 const errores = [];
 for (const f of readdirSync(SRC, { recursive: true, withFileTypes: true })) {

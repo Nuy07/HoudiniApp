@@ -8,7 +8,7 @@ from app.dominio import errores as e
 
 CODIGOS: dict[type[e.ErrorDominio], int] = {
     e.DatosInvalidos: 400, e.NoAutorizado: 401, e.NoEncontrado: 404, e.Conflicto: 409,
-    e.DemasiadosIntentos: 429, e.BaseNoDisponible: 503,
+    e.DemasiadosIntentos: 429, e.BaseNoDisponible: 503, e.IaNoConfigurada: 501, e.IaNoDisponible: 503,
 }
 
 

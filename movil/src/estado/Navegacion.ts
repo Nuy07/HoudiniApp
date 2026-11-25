@@ -1,6 +1,6 @@
 import type { Notificable } from '../dominio/puertos';
 
-export type Ruta = 'inicio' | 'perfiles' | 'reglas' | 'historial' | 'tienda' | 'complices' | 'ajustes';
+export type Ruta = 'inicio' | 'perfiles' | 'reglas' | 'historial' | 'tienda' | 'complices' | 'ajustes' | 'asistente';
 
 export class Navegacion {
   private actual: Ruta = 'inicio';

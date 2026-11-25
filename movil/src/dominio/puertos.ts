@@ -2,7 +2,7 @@
 // así los servicios no dependen de Expo, SQLite ni internet.
 import type {
   Bomba, Catalogo, Complice, Conteo, Coordenadas, Gatillo, ModoAcceso, PaqueteDescargado, Perfil, PerfilConVoz,
-  Publicacion, Registro, Regla, ResultadoAlerta, Sesion, TextoCifrado, Voz,
+  PlanEscape, Publicacion, Registro, Regla, ResultadoAlerta, Sesion, TextoCifrado, Voz,
 } from './modelos';
 
 export type Detener = () => void;
@@ -42,7 +42,7 @@ export interface ConsultaHistorial {
   quitarEjemplos(): void;
   borrar(): void;
 }
-export type ClavePreferencia = 'estilo' | 'proximidad' | 'accion' | 'agitar' | 'perfil' | 'bomba' | 'servidor';
+export type ClavePreferencia = 'estilo' | 'proximidad' | 'accion' | 'agitar' | 'perfil' | 'bomba' | 'servidor' | 'ia_nube' | 'ia_ejemplos';
 export interface Preferencias {
   leer(clave: ClavePreferencia, defecto?: string): string;
   guardar(clave: ClavePreferencia, valor: string | number): void;
@@ -81,6 +81,9 @@ export interface ComplicesRemotos {
 }
 export interface AlertasRemotas {
   enviar(mensaje: string, donde: Coordenadas | null): Promise<ResultadoAlerta>;
+}
+export interface PlanesRemotos {
+  planear(situacion: string, evitar: string): Promise<PlanEscape>;
 }
 export interface SesionActual {
   readonly usuario: string | null;

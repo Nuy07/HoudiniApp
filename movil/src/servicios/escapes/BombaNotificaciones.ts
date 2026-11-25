@@ -2,7 +2,7 @@ import type { Burbuja, Gatillo, Mensaje } from '../../dominio/modelos';
 import type {
   Avisador, ColeccionBombas, Notificable, Notificaciones, Preferencias, RegistroEscapes, Sonidos, Vibrador,
 } from '../../dominio/puertos';
-import type { Escape } from './Escape';
+import type { Escape, QueLanzar } from './Escape';
 
 const PAUSA = 1300;
 const VISIBLE = 7000;
@@ -30,8 +30,8 @@ export class BombaNotificaciones implements Escape {
   get burbujas() { return this.visibles; }
   get activo() { return this.enCurso; }
 
-  iniciar(gatillo: Gatillo, id = Number(this.preferencias.leer('bomba', '0'))) {
-    const b = this.bombas.paraLanzar(id);
+  iniciar(gatillo: Gatillo, que: QueLanzar = Number(this.preferencias.leer('bomba', '0'))) {
+    const b = typeof que === 'object' ? { nombre: que.titulo, mensajes: que.mensajes } : this.bombas.paraLanzar(que);
     if (!b) return this.avisos.mostrar('Crea una bomba de notificaciones primero.');
     this.historial.registrar(this.tipo, gatillo, b.nombre);
     this.enCurso = true;

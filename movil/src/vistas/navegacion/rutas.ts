@@ -3,6 +3,7 @@ import type { ComponentType } from 'react';
 import type { Ruta } from '../../estado/Navegacion';
 import type { NombreIcono } from '../componentes/Icono';
 import { Ajustes } from '../pantallas/Ajustes';
+import { Asistente } from '../pantallas/Asistente';
 import { Complices } from '../pantallas/Complices';
 import { Historial } from '../pantallas/Historial';
 import { Inicio } from '../pantallas/Inicio';
@@ -12,7 +13,10 @@ import { Tienda } from '../pantallas/Tienda';
 
 export const PANTALLAS: Record<Ruta, ComponentType> = {
   inicio: Inicio, perfiles: Perfiles, reglas: Reglas, historial: Historial, tienda: Tienda, complices: Complices, ajustes: Ajustes,
+  asistente: Asistente,
 };
+// Estas manejan su propio desplazamiento.
+export const FIJAS: Ruta[] = ['asistente'];
 export type Enlace = { ruta: Ruta; icono: NombreIcono; texto: string };
 export const PESTANAS: Enlace[] = [
   { ruta: 'inicio', icono: 'inicio', texto: 'Inicio' },
@@ -22,6 +26,7 @@ export const PESTANAS: Enlace[] = [
   { ruta: 'tienda', icono: 'tienda', texto: 'Tienda' },
 ];
 export const SUPERIORES: Enlace[] = [
+  { ruta: 'asistente', icono: 'destello', texto: 'Houdini IA' },
   { ruta: 'complices', icono: 'red', texto: 'Cómplices' },
   { ruta: 'ajustes', icono: 'ajustes', texto: 'Configuración' },
 ];

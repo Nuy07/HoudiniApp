@@ -9,6 +9,7 @@ from app.dominio.entidades import Usuario
 from app.dominio.errores import NoAutorizado
 from app.infraestructura.conexiones import ConexionesWebSocket
 from app.servicios.alertas import ServicioAlertas
+from app.servicios.asistente import ServicioAsistente
 from app.servicios.complices import ServicioComplices
 from app.servicios.cuentas import ServicioCuentas
 from app.servicios.respaldos import ServicioRespaldos
@@ -28,6 +29,7 @@ Respaldos = Annotated[ServicioRespaldos, _del_contenedor("respaldos")]
 Tienda = Annotated[ServicioTienda, _del_contenedor("tienda")]
 Complices = Annotated[ServicioComplices, _del_contenedor("complices")]
 Alertas = Annotated[ServicioAlertas, _del_contenedor("alertas")]
+Asistente = Annotated[ServicioAsistente, _del_contenedor("asistente")]
 Conexiones = Annotated[ConexionesWebSocket, _del_contenedor("conexiones")]
 
 

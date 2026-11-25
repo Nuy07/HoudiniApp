@@ -14,7 +14,7 @@ import { useApp } from './contexto';
 import { useBotonAtras } from './ganchos/useBotonAtras';
 import { BarraSuperior } from './navegacion/BarraSuperior';
 import { Pestanas } from './navegacion/Pestanas';
-import { PANTALLAS } from './navegacion/rutas';
+import { FIJAS, PANTALLAS } from './navegacion/rutas';
 
 export function Aplicacion() {
   const { navegacion, formularios, llamada, discreto, avisos } = useApp();
@@ -36,7 +36,9 @@ export function Aplicacion() {
       <View style={e.crece} importantForAccessibility={tapada ? 'no-hide-descendants' : 'auto'} accessibilityElementsHidden={tapada}>
         <KeyboardAvoidingView behavior="padding" enabled={!form} style={[e.crece, { paddingTop: margen.top }]}>
           <BarraSuperior />
-          <ScrollView key={navegacion.ruta} keyboardShouldPersistTaps="handled" contentContainerStyle={s.contenido}><Pantalla /></ScrollView>
+          {FIJAS.includes(navegacion.ruta) ? <Pantalla /> : (
+            <ScrollView key={navegacion.ruta} keyboardShouldPersistTaps="handled" contentContainerStyle={s.contenido}><Pantalla /></ScrollView>
+          )}
         </KeyboardAvoidingView>
         <Pestanas margen={margen.bottom} />
       </View>

@@ -27,6 +27,14 @@ class DemasiadosIntentos(ErrorDominio):
     pass
 
 
+class IaNoConfigurada(ErrorDominio):
+    pass
+
+
+class IaNoDisponible(ErrorDominio):
+    pass
+
+
 class BaseNoDisponible(ErrorDominio):
     def __init__(self, causa: str = ""):
         super().__init__("La base de datos no responde. Intenta en un momento.")

@@ -4,6 +4,7 @@ import { nombreAccion, TIEMPOS } from '../../dominio/catalogos';
 import { e } from '../../estilos/comunes';
 import { s } from '../../estilos/inicio';
 import { C, DEGRADADO_BOTON } from '../../estilos/tema';
+import { AccesoIA } from '../componentes/asistente/AccesoIA';
 import { Mini } from '../componentes/botones';
 import { Chips, Tarjeta } from '../componentes/cajas';
 import { Icono, type NombreIcono } from '../componentes/Icono';
@@ -35,6 +36,7 @@ export function Inicio() {
         </Pressable>
         <Text style={e.nota}>Acción: {nombreAccion(preferencias.leer('accion', 'llamada'))}</Text>
       </View>
+      <AccesoIA />
       <Text style={e.h2}>Menú rápido</Text>
       <Opcion ico="ojo" t="Rescate discreto" sub="Pantalla negra: 3 toques y suena" fn={() => discreto.entrar()} />
       <Opcion ico="tel" t="Simulación en vivo" sub="Llamada falsa inmediata" fn={() => lanzador.lanzar('llamada', 'menu')} />

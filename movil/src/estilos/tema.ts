@@ -8,6 +8,9 @@ export const C = {
 
 export const DEGRADADO_BOTON = ['#0f766e', '#4f46e5', '#7c3aed'] as const;
 
+export const DEGRADADO_IA = ['#312e81', '#6d28d9'] as const;
+export const DEGRADADO_RIESGO = ['#7f1d1d', '#b91c1c'] as const;
+
 // Colores de la llamada, según el sistema que imita.
 export const LLAMADA = {
   ios: { fondo: ['#3b4252', '#15181f'], avatar: '#6b7280' },

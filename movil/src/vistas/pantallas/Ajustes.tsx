@@ -32,6 +32,18 @@ function TripleBase() {
   );
 }
 
+function AjustesIA() {
+  const { asistente } = useApp();
+  const n = asistente.totalAprendido;
+  return (
+    <Tarjeta titulo="Houdini IA">
+      <Interruptor t="Usar IA en la nube" valor={asistente.permiteNube} fn={(v) => asistente.permitirNube(v)} />
+      <Nota>Con sesión, tu texto se envía a Claude. Sin sesión, o apagada, responde la IA del teléfono sin internet.</Nota>
+      <Par a="Aprendido de ti" b={n === 1 ? '1 situación' : `${n} situaciones`} />
+    </Tarjeta>
+  );
+}
+
 function Servidor() {
   const app = useApp();
   return (
@@ -73,6 +85,7 @@ export const Ajustes = () => (
   <>
     <Titulo t="Configuración" />
     <AjustesLlamada />
+    <AjustesIA />
     <TripleBase />
     <Servidor />
     <Respaldo />

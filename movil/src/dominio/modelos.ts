@@ -2,7 +2,7 @@
 
 // ---------- Escapes ----------
 export type Accion = 'llamada' | 'bomba';
-export type Gatillo = 'boton' | 'menu' | 'agitar' | 'discreto' | 'temporizador' | 'gps' | 'prueba' | 'demo';
+export type Gatillo = 'boton' | 'menu' | 'agitar' | 'discreto' | 'temporizador' | 'gps' | 'prueba' | 'ia' | 'demo';
 
 export type Voz = { id: number; nombre: string; rate: number; pitch: number; guion: string[] };
 export type Perfil = { id: number; nombre: string; etiqueta: string; vozId: number | null };
@@ -11,6 +11,11 @@ export type Mensaje = { de: string; texto: string };
 export type Bomba = { id: number; nombre: string; mensajes: Mensaje[] };
 export type DatosLlamada = { id: number; nombre: string; etiqueta: string; rate: number; pitch: number; guion: string[] };
 export type Burbuja = Mensaje & { id: number };
+
+// Lo que propone la IA para salir de una situación.
+export type PlanEscape = {
+  titulo: string; consejo: string; accion: Accion; riesgo: boolean; llamada: PerfilPublico; mensajes: Mensaje[];
+};
 
 // ---------- Reglas GPS ----------
 export type Coordenadas = { lat: number; lng: number };

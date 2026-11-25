@@ -13,6 +13,8 @@ class Configuracion:
     url_bd: str
     conexiones: int = 5
     puerto: int = 8000
+    clave_ia: str = ""  # sin clave, la app usa solo la IA del teléfono
+    modelo_ia: str = "claude-opus-5-5"
     tras_proxy: bool = False  # en Render la dirección real del cliente llega en una cabecera
 
     @classmethod
@@ -23,4 +25,6 @@ class Configuracion:
         if not url or "[YOUR" in url:
             raise SystemExit("Falta DATABASE_URL. Copia .env.example como .env y pon tu cadena de Supabase.")
         return cls(url_bd=url, conexiones=int(os.environ.get("BD_CONEXIONES", 5)),
+                   clave_ia=os.environ.get("ANTHROPIC_API_KEY", "").strip(),
+                   modelo_ia=os.environ.get("IA_MODELO", "").strip() or cls.modelo_ia,
                    puerto=int(os.environ.get("PORT", 8000)), tras_proxy=bool(os.environ.get("RENDER")))

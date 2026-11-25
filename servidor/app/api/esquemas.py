@@ -30,3 +30,8 @@ class Alerta(BaseModel):
     mensaje: str = Field(max_length=1000)
     lat: float | None = Field(default=None, ge=-90, le=90)
     lng: float | None = Field(default=None, ge=-180, le=180)
+
+
+class Situacion(BaseModel):
+    situacion: str = Field(max_length=1000)
+    evitar: str = Field(default="", max_length=100)

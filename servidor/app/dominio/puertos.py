@@ -70,6 +70,12 @@ class Huellas(Protocol):
     def coincide(self, clave: str, credencial: Credencial | None) -> bool: ...
 
 
+class GeneradorPlanes(Protocol):
+    """Cualquier IA que sepa armar un plan de escape."""
+
+    def generar(self, situacion: str, evitar: str) -> dict: ...
+
+
 class Mensajero(Protocol):
     """Avisos al instante a quien esté conectado."""
 

@@ -11,6 +11,7 @@ import { useContenedor } from '../contexto';
 import { useBotonAtras } from '../ganchos/useBotonAtras';
 
 function Entrada({ c, valor, fn }: { c: Campo; valor: string; fn: (v: string) => void }) {
+  const literal = c.tipo === 'clave' || c.id === 'usuario' || c.id === 'url'; // se escribe tal cual, sin autocorrector
   if (c.tipo === 'opciones') return <Opciones t={c.label} opciones={c.opciones ?? []} valor={valor} fn={fn} />;
   if (c.tipo === 'si') return <Interruptor t={c.label} valor={valor === '1'} fn={(v) => fn(v ? '1' : '')} />;
   return (
@@ -19,7 +20,7 @@ function Entrada({ c, valor, fn }: { c: Campo; valor: string; fn: (v: string) =>
       <TextInput style={[e.campo, c.tipo === 'area' && s.area]} accessibilityLabel={c.label}
         value={valor} onChangeText={fn} maxLength={c.max} placeholder={c.ayuda}
         placeholderTextColor={C.marcador} multiline={c.tipo === 'area'} secureTextEntry={c.tipo === 'clave'}
-        autoCapitalize={c.id === 'usuario' || c.tipo === 'clave' ? 'none' : 'sentences'} autoCorrect={c.id !== 'usuario'}
+        autoCapitalize={literal ? 'none' : 'sentences'} autoCorrect={!literal}
         keyboardType={c.tipo === 'numero' ? 'numbers-and-punctuation' : 'default'} />
     </View>
   );
