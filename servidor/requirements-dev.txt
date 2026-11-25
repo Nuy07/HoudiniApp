@@ -1,3 +1,3 @@
-# Solo para ejecutar prueba.py
+# Solo para ejecutar pruebas
 -r requirements.txt
 httpx>=0.27
